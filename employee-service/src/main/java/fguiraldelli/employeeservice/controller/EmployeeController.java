@@ -1,5 +1,6 @@
 package fguiraldelli.employeeservice.controller;
 
+import fguiraldelli.employeeservice.dto.APIResponseDto;
 import fguiraldelli.employeeservice.dto.EmployeeDto;
 import fguiraldelli.employeeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,8 @@ public class EmployeeController {
     }
 
     @GetMapping("{employeeId}")
-    public ResponseEntity<EmployeeDto> getEmployeed(@PathVariable("employeeId") Long employeeId){
-        EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
-        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+    public ResponseEntity<APIResponseDto> getEmployeed(@PathVariable("employeeId") Long employeeId){
+        APIResponseDto apiResponseDto = employeeService.getEmployeeById(employeeId);
+        return new ResponseEntity<>(apiResponseDto, HttpStatus.OK);
     }
 }
