@@ -3,6 +3,7 @@ package fguiraldelli.employeeservice.service.impl;
 import fguiraldelli.employeeservice.dto.APIResponseDto;
 import fguiraldelli.employeeservice.dto.DepartmentDto;
 import fguiraldelli.employeeservice.dto.EmployeeDto;
+import fguiraldelli.employeeservice.dto.OrganizationDto;
 import fguiraldelli.employeeservice.entity.Employee;
 import fguiraldelli.employeeservice.mapper.EmployeeMapper;
 import fguiraldelli.employeeservice.repository.EmployeeRepository;
@@ -63,11 +64,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 //        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
+        OrganizationDto organizationDto = webClient.get()
+                .uri("http://localhost:8083/api/organizations/" + employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDto.class)
+                .block();
+
         EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setEmployee(employeeDto);
         apiResponseDto.setDepartment(departmentDto);
+        apiResponseDto.setOrganization(organizationDto);
 
         return apiResponseDto;
     }
